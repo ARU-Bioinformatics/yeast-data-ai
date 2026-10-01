@@ -27,6 +27,10 @@ window.MG_CONFIG = {
      put a current one here (see ai.google.dev/gemini-api/docs/models). */
   liveProvider: 'gemini',
   geminiModel: 'gemini-3.8-flash',
+  /* If that model is busy ("high demand", HTTP 503), over its free-tier limit (429) or not
+     found (404), live mode asks these models in turn; the answer says which one replied.
+     [] turns this off. */
+  geminiFallbackModels: ['gemini-3.6-flash', 'gemini-3.5-flash-lite'],
   anthropicModel: 'claude-sonnet-5-5',
 
   /* example text shown in the 3D viewer's load boxes */

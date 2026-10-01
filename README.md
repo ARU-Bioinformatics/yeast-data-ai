@@ -99,7 +99,10 @@ mistakes and the self-ticking steps still work. Notes:
   say that users must be 18 or over, that Google may use what is sent to improve its products, that
   human reviewers may read it, and that nothing sensitive, confidential or personal should be sent.
   The free tier also allows only a few requests per minute and per day, so each student should use
-  their own key.
+  their own key. Google's servers are sometimes busy for a model – most often the newest one – and
+  answer “This model is currently experiencing high demand” (HTTP 503). The assistant then asks the
+  next model in `geminiFallbackModels` (also when a model is over its free-tier limit or not found),
+  and each answer says which model replied.
 - Google's Gemini API accepts calls from web pages as it is. Anthropic's API accepts them when the
   request says so (the page sends the `anthropic-dangerous-direct-browser-access` header – the name
   refers to the risk of exposing a key in a public page, which is why keys are entered by users).
@@ -182,6 +185,7 @@ embeddings alone 0.76, features + embeddings 0.83; NUP1 mean pLDDT 44 with 83% o
 | `assistantDefaultMode` | `'guided'` (default) or `'live'`; live mode still needs each user to enter a key |
 | `liveProvider` | the service offered first in live mode: `'gemini'` (default), `'anthropic'` or `'openai'` |
 | `geminiModel`, `anthropicModel` | default models for live mode (users can change them in ⚙). Models are retired from time to time: if live mode reports that a model is not found, put a current one here ([Gemini models](https://ai.google.dev/gemini-api/docs/models)); students who have not typed a model of their own get the new one straight away |
+| `geminiFallbackModels` | the Gemini models asked in turn when the chosen one is busy (HTTP 503), over its free-tier limit (429) or not found (404) – by default `gemini-3.6-flash`, then `gemini-3.5-flash-lite`; `[]` turns this off |
 | `storePrefix` | name used for the answers and notebook saved in the browser; change it to give a new cohort a clean start |
 | `afExample`, `pdbExample` | example text in the 3D viewer's load boxes |
 
