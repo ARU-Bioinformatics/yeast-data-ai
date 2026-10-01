@@ -61,7 +61,7 @@
   <div class="callout pharm">
     <div class="co-t">About the AI assistant</div>
     <p>The assistant starts in <b>guided mode</b>: its answers to this practical’s questions were generated in advance by an AI model and checked. Like real AI output, <b>some of them contain mistakes on purpose</b> – a wrong label, an unsuitable test, a leaky model, a wrong reference. Finding them is part of the practical, so read every answer as you would a colleague’s work.</p>
-    <p>You can also press <b>Copy prompt</b> to take a question (with a description of the data and your code) to any AI tool you have access to, or – if your lecturer gives you an API key – connect a <b>live</b> model with ⚙ in the assistant.</p>
+    <p>You can also press <b>Copy prompt</b> to take a question (with a description of the data and your code) to any AI tool you have access to, or connect a <b>live</b> model with ⚙ in the assistant, using an API key – your own (Google Gemini has a free tier) or one from your lecturer.</p>
   </div>
   <div class="callout info">
     <div class="co-t">First time with Python?</div>
@@ -506,7 +506,7 @@
     <li><b>Iterate:</b> tell it precisely what is wrong with its answer.</li>
   </ul>
   <h2>The live assistant</h2>
-  <p>In the assistant’s settings (⚙) you can connect a live model: <b>Anthropic (Claude)</b> or any <b>OpenAI-compatible</b> service, with an API key. Your messages, the code in your notebook and – when you ask about a cell – the start of its output or error message are sent from your browser directly to that service; the data files are not. Keys stay in this browser tab. The ▶ buttons in the instructions still give the practical’s prepared answers; questions you type go to the live model. Without a key, <b>Copy prompt</b> prepares a question for any AI tool you can use.</p>
+  <p>In the assistant’s settings (⚙) you can connect a live model: <b>Google Gemini</b>, <b>Anthropic (Claude)</b> or any <b>OpenAI-compatible</b> service, with an API key. The Gemini API has a free tier: make a key with a Google account at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> (you must be 18 or over). On the free tier Google may use what you send to improve its products and human reviewers may read it, and only a few requests per minute and per day are allowed. Your messages, the code in your notebook and – when you ask about a cell – the start of its output or error message are sent from your browser directly to that service; the data files are not. Keys stay in this browser tab. The ▶ buttons in the instructions still give the practical’s prepared answers; questions you type go to the live model. Without a key, <b>Copy prompt</b> prepares a question for any AI tool you can use.</p>
   <h2>Data sources</h2>
   <ul class="small">
     <li><b>Genes, sequences, essentiality and phenotypes:</b> Saccharomyces Genome Database (SGD, yeastgenome.org; Engel SR <i>et al.</i> (2025) <i>Genetics</i> 229:iyae185), reference genome S288C. Essential = “inviable” null mutant in the S288C systematic deletion collection (Giaever G <i>et al.</i> (2002) <i>Nature</i> 418:387–391 and later SGD curation); 15 genes with conflicting records were removed.</li>

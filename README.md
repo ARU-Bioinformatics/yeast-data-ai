@@ -79,25 +79,32 @@ tool they are allowed to use (for example a university-licensed assistant). The 
 be pasted into a cell and checked.
 
 **Live mode (optional).** In the assistant's settings (⚙) a user can connect a real model:
-**Anthropic (Claude)** – the default model is `claude-sonnet-5-5` – or any **OpenAI-compatible**
-service (base URL + model name). Typed questions go to that model: the question, the notebook's code, a
-description of the columns and – when a student asks about a cell – the start of that cell's output or
-error message are sent from the browser directly to the service (the data files are not). The answer
-streams into the panel; *Stop* ends it. The ▶ buttons in the instructions and the suggestions keep
-giving the practical's prepared answers, so the planted mistakes and the self-ticking steps still work.
-Notes:
+**Google Gemini** – offered first, because the Gemini API has a free tier; the default model is
+`gemini-3.8-flash` – **Anthropic (Claude)** – the default model is `claude-sonnet-5-5` – or any
+**OpenAI-compatible** service (base URL + model name). Typed questions go to that model: the
+question, the notebook's code, a description of the columns and – when a student asks about a cell –
+the start of that cell's output or error message are sent from the browser directly to the service
+(the data files are not). The answer streams into the panel; *Stop* ends it. The ▶ buttons in the
+instructions and the suggestions keep giving the practical's prepared answers, so the planted
+mistakes and the self-ticking steps still work. Notes:
 
 - **Never put an API key in `config.js` or anywhere in the repository** – anyone could copy it from a
   public site. Keys are typed into the settings dialog; by default they are kept only in memory, or
   in the browser tab's session storage if the user ticks *Remember* (cleared when the tab closes).
-- For a class, the simplest options are: demonstrate live mode yourself on the projector; or give
-  students keys from a workspace with a **spending limit**; or leave it off and use *Copy prompt*
-  with your institution's approved AI tool.
-- Anthropic's API accepts calls from web pages when the request says so (the page sends the
-  `anthropic-dangerous-direct-browser-access` header – the name refers to the risk of exposing a key
-  in a public page, which is why keys are entered by users). Other services must allow cross-origin
-  requests (CORS); a local server such as Ollama or LM Studio needs CORS enabled
-  (e.g. `OLLAMA_ORIGINS=*`) and does not need a key.
+- For a class, the simplest options are: demonstrate live mode yourself on the projector; or let
+  students make their own free Gemini key; or give students keys from a workspace with a
+  **spending limit**; or leave it off and use *Copy prompt* with your institution's approved AI tool.
+- **Gemini's free tier:** each student makes their own key with a Google account at
+  [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Google's terms for the free tier
+  say that users must be 18 or over, that Google may use what is sent to improve its products, that
+  human reviewers may read it, and that nothing sensitive, confidential or personal should be sent.
+  The free tier also allows only a few requests per minute and per day, so each student should use
+  their own key.
+- Google's Gemini API accepts calls from web pages as it is. Anthropic's API accepts them when the
+  request says so (the page sends the `anthropic-dangerous-direct-browser-access` header – the name
+  refers to the risk of exposing a key in a public page, which is why keys are entered by users).
+  Other services must allow cross-origin requests (CORS); a local server such as Ollama or LM Studio
+  needs CORS enabled (e.g. `OLLAMA_ORIGINS=*`) and does not need a key.
 - Check your module's and institution's policies on generative AI before asking students to use a
   live model.
 
@@ -173,7 +180,8 @@ embeddings alone 0.76, features + embeddings 0.83; NUP1 mean pLDDT 44 with 83% o
 | `showModelAnswers` | `true`: *Show answer* buttons under the questions; `false`: hidden (add `?answers` to the address to see them) |
 | `pyodideBase` | where Python is loaded from – jsDelivr by default (see below to host it yourself) |
 | `assistantDefaultMode` | `'guided'` (default) or `'live'`; live mode still needs each user to enter a key |
-| `anthropicModel` | default Claude model for live mode (users can change it in ⚙) |
+| `liveProvider` | the service offered first in live mode: `'gemini'` (default), `'anthropic'` or `'openai'` |
+| `geminiModel`, `anthropicModel` | default models for live mode (users can change them in ⚙). Models are retired from time to time: if live mode reports that a model is not found, put a current one here ([Gemini models](https://ai.google.dev/gemini-api/docs/models)); students who have not typed a model of their own get the new one straight away |
 | `storePrefix` | name used for the answers and notebook saved in the browser; change it to give a new cohort a clean start |
 | `afExample`, `pdbExample` | example text in the 3D viewer's load boxes |
 
@@ -240,13 +248,14 @@ The full definitions, sources and the scripts that rebuild the files are in
 ## Privacy
 
 Everything runs in the student's browser. The gene data are public. Answers, progress and notebook
-cells are saved only in that browser (`localStorage`); nothing is sent to a server run by the course.
-The page loads Python from jsDelivr and, in the 3D viewer, AlphaFold models from EBI (and structures
-from the RCSB PDB if a PDB ID is typed). In live mode the assistant sends the student's typed messages,
-the notebook code and, when they ask about a cell, the start of its output or error message to the AI
-service the user chose. HTML output in the notebook is sanitised (DOMPurify) before it is shown. The
-practical reminds students never to paste personal or patient data into AI tools. If the page is open
-in two tabs, it warns the student and keeps the answers saved from both.
+cells are saved only in that browser (`localStorage`); nothing is sent to a server run by the
+course. The page loads Python from jsDelivr and, in the 3D viewer, AlphaFold models from EBI (and
+structures from the RCSB PDB if a PDB ID is typed). In live mode the assistant sends the student's
+typed messages, the notebook code and, when they ask about a cell, the start of its output or error
+message to the AI service the user chose – on Gemini's free tier, under Google's terms for unpaid
+services (see *Live mode* above). HTML output in the notebook is sanitised (DOMPurify) before it is
+shown. The practical reminds students never to paste personal or patient data into AI tools. If the
+page is open in two tabs, it warns the student and keeps the answers saved from both.
 
 ## Browser support and network
 
